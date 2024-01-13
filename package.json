@@ -1,0 +1,42 @@
+{
+  "name": "@jgarber/eleventy-plugin-markdown",
+  "version": "0.1.0",
+  "description": "An Eleventy plugin for processing Markdown files with markdown-it.",
+  "keywords": [
+    "eleventy",
+    "eleventy-plugin",
+    "markdown",
+    "markdown-it"
+  ],
+  "homepage": "https://github.com/jgarber623/eleventy-plugin-markdown",
+  "bugs": "https://github.com/jgarber623/eleventy-plugin-markdown/issues",
+  "license": "MIT",
+  "author": "Jason Garber <jason@sixtwothree.org> (https://sixtwothree.org)",
+  "files": [
+    "lib/*",
+    "eleventy.config.js"
+  ],
+  "exports": {
+    "./package.json": "./package.json",
+    ".": "./eleventy.config.js"
+  },
+  "repository": "github:jgarber623/eleventy-plugin-markdown",
+  "scripts": {
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "markdown-it": "^14.0.0"
+  },
+  "devDependencies": {
+    "@jgarber/eslint-config": "^3.0.0"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "11ty": {
+    "compatibility": ">=2.0.0"
+  }
+}

@@ -14,11 +14,11 @@
   "author": "Jason Garber <jason@sixtwothree.org> (https://sixtwothree.org)",
   "files": [
     "lib/*",
-    "eleventy.config.js"
+    "index.js"
   ],
   "exports": {
     "./package.json": "./package.json",
-    ".": "./eleventy.config.js"
+    ".": "./index.js"
   },
   "repository": "github:jgarber623/eleventy-plugin-markdown",
   "scripts": {

@@ -1,5 +1,4 @@
-const markdownFilter = require('./lib/filters/markdown.js');
-const markdownLibrary = require('./lib/libraries/markdown.js');
+const markdown = require('markdown-it');
 
 const package_ = require('./package.json');
 
@@ -20,7 +19,31 @@ module.exports = function(eleventyConfig, options_ = {}) {
 
   plugins = plugins.filter(Boolean);
 
-  eleventyConfig.setLibrary('md', markdownLibrary({ options, plugins, preset, rules }));
+  const markdownLibrary = (() => {
+    const parser = markdown(preset, options);
 
-  eleventyConfig.addFilter('markdown', markdownFilter);
+    for (const plugin of plugins) {
+      if (Array.isArray(plugin)) {
+        parser.use(...plugin);
+      } else {
+        parser.user(plugin);
+      }
+    }
+
+    for (const rule in rules) {
+      parser.renderer.rules[rule] = rules[rule];
+    }
+
+    return parser;
+  })();
+
+  eleventyConfig.setLibrary('md', markdownLibrary);
+
+  eleventyConfig.addFilter('markdown', (string = '', value) => {
+    if (value === 'inline') {
+      return markdownLibrary.renderInline(string);
+    }
+
+    return markdownLibrary.render(string);
+  });
 };

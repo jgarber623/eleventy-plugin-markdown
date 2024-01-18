@@ -26,7 +26,7 @@ module.exports = function(eleventyConfig, options_ = {}) {
       if (Array.isArray(plugin)) {
         parser.use(...plugin);
       } else {
-        parser.user(plugin);
+        parser.use(plugin);
       }
     }
 

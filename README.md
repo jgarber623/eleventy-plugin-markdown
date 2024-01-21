@@ -91,6 +91,18 @@ module.exports = function(eleventyConfig) {
 };
 ```
 
+## ESM Support
+
+Eleventy v3.0.0 [added bundler-free ESM support](https://www.11ty.dev/blog/canary-eleventy-v3). This plugin works with either ESM or CommonJS projects!
+
+```js
+import markdownPlugin from '@jgarber/eleventy-plugin-markdown';
+
+export default async function(eleventyConfig) {
+  eleventyConfig.addPlugin(markdownPlugin);
+}
+```
+
 ## Acknowledgments
 
 First and foremost, eleventy-plugin-markdown wouldn't be possible without [Zach Leatherman](https://www.zachleat.com)'s incredible work creating Eleventy and his stewardship of its community.

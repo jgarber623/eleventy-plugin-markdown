@@ -1,20 +1,20 @@
-const markdown = require('markdown-it');
+const markdown = require("markdown-it");
 
-const package_ = require('./package.json');
+const package_ = require("./package.json");
 
 module.exports = function(eleventyConfig, options_ = {}) {
   try {
-    eleventyConfig.versionCheck(package_['11ty'].compatibility);
+    eleventyConfig.versionCheck(package_["11ty"].compatibility);
   } catch (error) {
     console.log(`WARN: Eleventy Plugin (${package_.name}) Compatibility: ${error.message}`);
   }
 
-  let { options, preset = 'default', plugins = [], rules = {} } = options_;
+  let { options, preset = "default", plugins = [], rules = {} } = options_;
 
   options = Object.assign({
     breaks: true,
     html: true,
-    typographer: true
+    typographer: true,
   }, options);
 
   plugins = plugins.filter(Boolean);
@@ -37,10 +37,10 @@ module.exports = function(eleventyConfig, options_ = {}) {
     return parser;
   })();
 
-  eleventyConfig.setLibrary('md', markdownLibrary);
+  eleventyConfig.setLibrary("md", markdownLibrary);
 
-  eleventyConfig.addFilter('markdown', (string = '', value) => {
-    if (value === 'inline') {
+  eleventyConfig.addFilter("markdown", (string = "", value) => {
+    if (value === "inline") {
       return markdownLibrary.renderInline(string);
     }
 

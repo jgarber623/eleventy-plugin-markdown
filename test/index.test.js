@@ -1,7 +1,7 @@
-const assert = require("node:assert");
-const test = require("node:test");
+import assert from "node:assert";
+import test from "node:test";
 
-const Eleventy = require("@11ty/eleventy");
+import Eleventy from "@11ty/eleventy";
 
 test("default plugin configuration", async () => {
   const eleventy = new Eleventy("test/fixtures/default", null, { configPath: "index.js" });

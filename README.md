@@ -17,9 +17,11 @@ npm install --save-dev @jgarber/eleventy-plugin-markdown
 Next, add the plugin to your project's [Eleventy configuration file](https://www.11ty.dev/docs/config#default-filenames) (e.g. `eleventy.config.js`):
 
 ```js
-module.exports = function(eleventyConfig) {
-  eleventyConfig.addPlugin(require('@jgarber/eleventy-plugin-markdown'));
-};
+import eleventyPluginMarkdown from "@jgarber/eleventy-plugin-markdown";
+
+export default async function(eleventyConfig) {
+  eleventyConfig.addPlugin(eleventyPluginMarkdown);
+}
 ```
 
 ### Filters
@@ -29,7 +31,7 @@ With no additional configuration, eleventy-plugin-markdown will configure markdo
 In [a JavaScript template](https://www.11ty.dev/docs/languages/javascript) (e.g. `post.11ty.js`), you might use the `markdown` filter to process a post's title to properly render typographic quotes. The optional second argument, `'inline'`, instructs the filter to use [`MarkdownIt.renderInline`](https://markdown-it.github.io/markdown-it#MarkdownIt.renderInline) which will not wrap the output in a `<p>` element.
 
 ```js
-module.exports = class {
+export default class {
   render({ collections }) {
     const post = collections.post[0];
 
@@ -37,7 +39,7 @@ module.exports = class {
       title: this.markdown(post.data.title, 'inline')
     });
   }
-};
+}
 ```
 
 Or, in [a Liquid template](https://www.11ty.dev/docs/languages/liquid) (e.g. `post.liquid`):
@@ -65,14 +67,19 @@ See [the `MarkdownIt.new` documentation](https://markdown-it.github.io/markdown-
 The `plugins` option accepts an Array whose elements may be plugin functions or an Array of a plugin function and an Object of options. Each element in the `plugins` Array is passed directly to [`MarkdownIt.use`](https://markdown-it.github.io/markdown-it#MarkdownIt.use).
 
 ```js
-module.exports = function(eleventyConfig) {
-  eleventyConfig.addPlugin(require('@jgarber/eleventy-plugin-markdown'), {
+import eleventyPluginMarkdown from "@jgarber/eleventy-plugin-markdown";
+
+import markdownItFootnote from "markdown-it-footnote";
+import markdownItHandle from "markdown-it-handle";
+
+export default async function(eleventyConfig) {
+  eleventyConfig.addPlugin(eleventyPluginMarkdown, {
     plugins: [
-      require('markdown-it-footnote'),
-      [require('markdown-it-handle'), { attributes: false }]
+      markdownItFootnote,
+      [markdownItHandle, { attributes: false }]
     ]
   });
-};
+}
 ```
 
 ### Renderer Rules
@@ -80,26 +87,18 @@ module.exports = function(eleventyConfig) {
 The `rules` option accepts an Object whose keys are tokens and values are functions conforming to [markdown-it's `Renderer#rules` interface](https://markdown-it.github.io/markdown-it#Renderer.prototype.rules). Various plugins (like [markdown-it-footnote](https://www.npmjs.com/package/markdown-it-footnote)) support this kind of customization.
 
 ```js
-module.exports = function(eleventyConfig) {
-  eleventyConfig.addPlugin(require('@jgarber/eleventy-plugin-markdown'), {
-    plugins: [require('markdown-it-footnote')],
+import eleventyPluginMarkdown from "@jgarber/eleventy-plugin-markdown";
+
+import markdownItFootnote from "markdown-it-footnote";
+
+export default async function(eleventyConfig) {
+  eleventyConfig.addPlugin(eleventyPluginMarkdown, {
+    plugins: [markdownItFootnote],
     rules: {
       footnote_block_open: () => `<h2>Footnotes</h2>\n<ol class="footnotes">\n`,
       footnote_block_close: () => '</ol>\n'
     }
   });
-};
-```
-
-## ESM Support
-
-Eleventy v3.0.0 [added bundler-free ESM support](https://www.11ty.dev/blog/canary-eleventy-v3). This plugin works with either ESM or CommonJS projects!
-
-```js
-import markdownPlugin from '@jgarber/eleventy-plugin-markdown';
-
-export default async function(eleventyConfig) {
-  eleventyConfig.addPlugin(markdownPlugin);
 }
 ```
 

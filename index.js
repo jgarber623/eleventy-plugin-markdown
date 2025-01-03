@@ -1,21 +1,19 @@
-const markdown = require("markdown-it");
+import markdown from "markdown-it";
 
-const package_ = require("./package.json");
+import pkg from "./package.json" with { type: "json" };
 
-module.exports = function(eleventyConfig, options_ = {}) {
-  try {
-    eleventyConfig.versionCheck(package_["11ty"].compatibility);
-  } catch (error) {
-    console.log(`WARN: Eleventy Plugin (${package_.name}) Compatibility: ${error.message}`);
-  }
+export const defaultMarkdownOptions = {
+  breaks: true,
+  html: true,
+  typographer: true,
+};
+
+export default function eleventyPluginMarkdown(eleventyConfig, options_ = {}) {
+  eleventyConfig.versionCheck(pkg["11ty"].compatibility);
 
   let { options, preset = "default", plugins = [], rules = {} } = options_;
 
-  options = Object.assign({
-    breaks: true,
-    html: true,
-    typographer: true,
-  }, options);
+  options = Object.assign(defaultMarkdownOptions, options);
 
   plugins = plugins.filter(Boolean);
 
@@ -46,4 +44,4 @@ module.exports = function(eleventyConfig, options_ = {}) {
 
     return markdownLibrary.render(string);
   });
-};
+}

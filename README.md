@@ -60,6 +60,8 @@ Or, in [a Liquid template](https://www.11ty.dev/docs/languages/liquid) (e.g. `po
 | `plugins` | `Array`  | `[]`                                              |
 | `rules`   | `Object` | `{}`                                              |
 
+From v2.0.0, this package exports these options as `defaultMarkdownOptions`.
+
 See [the `MarkdownIt.new` documentation](https://markdown-it.github.io/markdown-it#MarkdownIt.new) for details on additional `preset` and `options` values.
 
 ### Plugins
